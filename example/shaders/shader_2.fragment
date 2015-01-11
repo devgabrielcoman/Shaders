@@ -1,0 +1,35 @@
+// this is the vertex normal sent from the vertexshader
+varying vec3 vNormal;
+
+// uniforms sent directly to the fragmentshader
+// from the main program
+uniform vec3 color;
+
+//////////////////////////////////////
+// @brief: calculates a directional light with
+// - ambient
+// - diffuse
+// components
+vec4 directionalLight(){
+	vec3 color = vec3(1, 1, 1);
+	float ambientIntensity = 0.5;
+	vec3 direction = vec3(0.5, 0.2, 1);
+	float diffuseIntensity = 0.75;
+	float specularIntensity = 1.0;
+	float specularPower = 32.0;
+
+	// the three colors
+	vec3 ambientColor = ambientIntensity * color;
+	vec3 diffuseColor = vec3(0, 0, 0);
+	
+	float diffuseFactor = dot(vNormal, direction);
+	if (diffuseFactor > 0.0){
+		diffuseColor = diffuseIntensity * diffuseFactor * color;
+	}
+
+	return vec4((ambientColor + diffuseColor), 1);
+}
+
+void main() {
+	gl_FragColor = vec4(color,1) * directionalLight();
+}

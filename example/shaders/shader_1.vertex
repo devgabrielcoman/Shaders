@@ -1,0 +1,7 @@
+void main() {
+
+	// set final position
+	gl_Position = 	projectionMatrix *		// projectionMatrix is built-in
+					modelViewMatrix *		// modelViewMatrix is built-in
+			        vec4(position,1.0);		// position is built-in
+}

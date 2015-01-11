@@ -1,0 +1,36 @@
+// this is the vertex normal sent from the vertexshader
+varying vec3 vNormal;
+// this is the UV sent from the vertexshader
+varying vec2 vUV;
+
+// uniform sampler2D texture1;
+uniform sampler2D texture1;
+
+//////////////////////////////////////
+// @brief: calculates a directional light with
+// - ambient
+// - diffuse
+// components
+vec4 directionalLight(){
+	vec3 color = vec3(1, 1, 1);
+	float ambientIntensity = 0.5;
+	vec3 direction = vec3(0.5, 0.2, 1);
+	float diffuseIntensity = 0.75;
+	float specularIntensity = 1.0;
+	float specularPower = 32.0;
+
+	// the three colors
+	vec3 ambientColor = ambientIntensity * color;
+	vec3 diffuseColor = vec3(0, 0, 0);
+	
+	float diffuseFactor = dot(vNormal, direction);
+	if (diffuseFactor > 0.0){
+		diffuseColor = diffuseIntensity * diffuseFactor * color;
+	}
+
+	return vec4((ambientColor + diffuseColor), 1);
+}
+
+void main() {
+	gl_FragColor = texture2D(texture1, vUV) * directionalLight();
+}

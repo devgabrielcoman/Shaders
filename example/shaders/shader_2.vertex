@@ -1,0 +1,15 @@
+// normal of each vertex 
+// is varying because I want 
+// to pass it from vertexshader to fragmentshader 
+varying vec3 vNormal;
+
+void main() {
+
+	// set the vNormal to normal, which is provided by three.js
+	vNormal = normal;
+	
+	// set final position
+	gl_Position = 	projectionMatrix *		// projectionMatrix is built-in
+					modelViewMatrix *		// modelViewMatrix is built-in
+			        vec4(position,1.0);		// position is built-in
+}
